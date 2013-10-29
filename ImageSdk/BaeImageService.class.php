@@ -11,7 +11,6 @@ require_once(API_ROOT_PATH . '/images/BaeImageComposite.class.php');
 require_once(API_ROOT_PATH . '/images/BaeImageQRCode.class.php');
 require_once(API_ROOT_PATH . '/images/BaeImageTransform.class.php');
 require_once(API_ROOT_PATH . '/images/BaeImageVCode.class.php');
-/*require_once(API_ROOT_PATH . '/images/bcs/bcs.class.php');*/ // local file upload
 require_once(API_ROOT_PATH . '/lib/RequestCore.class.php');
 
 class BaeImageService extends BaeBase{
@@ -311,11 +310,6 @@ class BaeImageService extends BaeBase{
 				if(!$this->_checkString($baeImageSource, 0, 2*1024*1024)){
 					throw new BaeException('image must be less than 2M', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 				}
-				/*$retURL = $this->uploadToBCS($baeImageSource);
-				// if upload to bcs is successful
-				if($retURL !== false){
-					$URL = $retURL;
-				}*/ // local file upload
 			}
 
 			$paramArr = $baeImageTransform->getOperations();// obtain the operations setting on the image
@@ -328,7 +322,6 @@ class BaeImageService extends BaeBase{
 
 		} catch (Exception $ex) {
 			$this->_exceptionHandler($ex);
-			//echo "error:". $this->errmsg();
 			return false;
 		}
 
@@ -364,7 +357,6 @@ class BaeImageService extends BaeBase{
 					}
 					switch($key){
 						case BaeImageConstant::TRANSFORM_ZOOMING:
-							//echo "i am here:".$key."\n";
 							if(!is_array($value) || count($value) < 2 || count($value) > 3){
 								throw new BaeException('invalid zooming param', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 							}
@@ -449,16 +441,10 @@ class BaeImageService extends BaeBase{
 				if(!$this->_checkString($baeImageSource, 0, 2*1024*1024)){
 					throw new BaeException('image must be less than 2M', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 				}
-				/*$retURL = $this->uploadToBCS($baeImageSource);
-				// if upload to bcs is successful
-				if($retURL !== false){
-					$URL = $retURL;
-				}*/ // local file upload
 			}
 			
 			unset($params);
 			$params = $baeImageTransform->getOperations();
-			//var_dump($params);
 			$params['src'] = $URL;
 			$arrArgs = array(
 			self::METHOD => 'process',);
@@ -506,10 +492,6 @@ class BaeImageService extends BaeBase{
 				if(!$this->_checkString($baeImageSource, 0, 2*1024*1024)){
 					throw new BaeException('image must be less than 2M', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 				}
-				/*$retURL = $this->uploadToBCS($baeImageSource);
-				if($retURL !== false){
-					$URL = $retURL;
-				}*/  // local file upload
 			}
 
 			$operations = $baeImageAnnotate->getOperations();
@@ -611,16 +593,10 @@ class BaeImageService extends BaeBase{
 				if(!$this->_checkString($baeImageSource, 0, 2*1024*1024)){
 					throw new BaeException('image must be less than 2M', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 				}
-				/*$retURL = $this->uploadToBCS($baeImageSource);
-				// if upload to bcs is successful
-				if($retURL !== false){
-					$URL = $retURL;
-				}*/ // local file upload
 			}
 			unset($params);
 
 			$operations = $baeImageAnnotate->getOperations();
-			//var_dump($operations);
 			$jsonParams = $this->_formJsonParams($URL, $operations, $this->ProcType_Annotate, true);
 			$paramArr = array('strudata'=>$jsonParams);
 			$arrArgs = array(
@@ -651,7 +627,6 @@ class BaeImageService extends BaeBase{
 			if($baeImageQRCode->errcode !== 0){
 				$this->errcode = $baeImageQRCode->errcode;
 				$this->errmsg = $baeImageQRCode->errmsg;
-				//echo $this->errmsg();
 				return false;
 			}
 			$operations = $baeImageQRCode->getOperations();
@@ -668,7 +643,6 @@ class BaeImageService extends BaeBase{
 			return $this->_commonProcess($arrArgs);
 
 		}catch (Exception $ex) {
-				//echo "ex msg:".$ex->getMessage().$ex->getLine().":".$ex->getFile();
 				$this->_exceptionHandler($ex);
 				return false;
 			}
@@ -734,7 +708,6 @@ class BaeImageService extends BaeBase{
 				return false;
 			}
 			$operations = $baeImageQRCode->getOperations();
-			//var_dump($operations);
 			// GBK ENCODE
 			$this->_checkString2($text,'text', 1,500);
 			$text = mb_convert_encoding($text, 'GBK', 'UTF-8');
@@ -828,14 +801,6 @@ class BaeImageService extends BaeBase{
 				self::METHOD => 'processExt',);
 				$arrArgs = array_merge($arrArgs, $paramArr);
 				$retImage = $this->_commonProcess($arrArgs);
-				// a new image after composition
-				/*$retImageStr = base64_decode($retImage['response_params']['image_data']);
-
-				$retURL = $this->uploadToBCS($retImageStr);
-				$imageSource[0] = $retURL;
-				$isURL[0] = true;
-				$operations[0] = array();// set default value
-				*/  // local file upload	
 			}
 			return $retImage;
 
@@ -943,7 +908,6 @@ class BaeImageService extends BaeBase{
 					}
 					switch($key){
 						case BaeImageConstant::COMPOSITE_BAEIMAGESOURCE:
-							////if(!is_array($value) || count($value) != 2){
 							if(!is_array($value)){
 								throw new BaeException('invalid bae image source parameter', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 							}
@@ -994,14 +958,6 @@ class BaeImageService extends BaeBase{
 				self::METHOD => 'processExt',);
 				$arrArgs = array_merge($arrArgs, $paramArr);
 				$retImage = $this->_commonProcess($arrArgs);
-				// a new image after composition
-				/*$retImageStr = base64_decode($retImage['response_params']['image_data']);
-				$retURL = $this->uploadToBCS($retImageStr);
-				
-				$imageSource[0] = $retURL;
-				$isURL[0] = true;
-				$operations[0] = array();// set default value
-				*/  // local file upload
 			}
 			return $retImage;
 		} catch (Exception $ex) {
@@ -1069,7 +1025,6 @@ class BaeImageService extends BaeBase{
 			return $retArr;
 		} catch (Exception $ex) {
 				$this->_exceptionHandler($ex);
-				//echo "error:". $this->errmsg();
 				return false;
         		}
 		
@@ -1138,34 +1093,9 @@ class BaeImageService extends BaeBase{
 
 		} catch (Exception $ex) {
 			$this->_exceptionHandler($ex);
-			//echo "error:". $this->errmsg();
 			return false;
 		}
 	}
-	/*
-	private function uploadToBCS($imageSrc){
-		$bcs_ak = 'V5MNifyVcqIK7dWbPF';
-		$bcs_sk = '0E1yzI62dqDuC8QgcE26u0Frdc';
-		$bcs_host = 's3.bae.baidu.com';
-		$baiduBCS = new BaiduBCS($bcs_ak, $bcs_sk, $bcs_host);
-		
-		$bucket = 'baeimageservice-local';
-		//object name
-		$prefix = $this->_clientId;
-		list($file, $folder) = explode(' ', microtime());
-		$suffix = $file . '_' . mt_rand(10000, 99999);
-		$object = '/' . $folder. '/' . $prefix . '_' . $suffix;
-		//upload image file by content
-		$response = $baiduBCS->create_object_by_content($bucket, $object, $imageSrc);
-		if(!$response->isOK()){
-			die('Create object failed.');
-		}
-		$url = $baiduBCS->generate_get_object_url($bucket,$object);
-		if($url === false){
-			die('Generate GET object url failed.');	
-		}
-		return $url;
-	}*/  // local file upload
 	
 	/*
 	 * 

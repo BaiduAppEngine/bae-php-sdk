@@ -39,10 +39,6 @@ class BaeImageComposite extends BaeBase{
 					if(!$this->_checkString($baeImageSource, 0, 2*1024*1024)){
 						throw new BaeException('image must be less than 2M', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 					}
-					/*$retURL = $this->uploadToBCS($baeImageSource);
-					if($retURL !== false){
-						$this->baeImageSource = $retURL;
-					}*/  // local file upload
 				}
 				$this->isURL = true;
 			}
@@ -71,10 +67,6 @@ class BaeImageComposite extends BaeBase{
 				if(!$this->_checkString($baeImageSource, 0, 2*1024*1024)){
 					throw new BaeException('image must be less than 2M', BaeImageConstant::BAE_IMAGEUI_SDK_PARAM);
 				}
-				/*$retURL = $this->uploadToBCS($baeImageSource);
-				if($retURL !== false){
-					$this->baeImageSource = $retURL;
-				}*/ // local file upload
 			}
 			$this->isURL = true;
 		}catch (Exception $ex) {
