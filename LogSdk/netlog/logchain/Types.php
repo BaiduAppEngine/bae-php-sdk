@@ -20,11 +20,29 @@ use Thrift\Exception\TApplicationException;
 final class BaeRet {
   const OK = 0;
   const RETRY = 1;
-  const INTERNAL_ERROR = 2;
+  const OLD_VERSION = 2;
+  const AUTH_PARM_ERROR = 3;
+  const AUTH_FAIL = 4;
+  const AUTH_ASK_NOT_EXIST = 5;
+  const AUTH_ASK_NOT_MATCH = 6;
+  const AUTH_QUOTA_NOT_INIT = 7;
+  const AUTH_QUOTA_EXCEED = 8;
+  const AUTH_QUOTA_UPDATE_ERROR = 9;
+  const AUTH_CONN_FAIL = 10;
+  const INTERNAL_ERROR = 11;
   static public $__names = array(
     0 => 'OK',
     1 => 'RETRY',
-    2 => 'INTERNAL_ERROR',
+    2 => 'OLD_VERSION',
+    3 => 'AUTH_PARM_ERROR',
+    4 => 'AUTH_FAIL',
+    5 => 'AUTH_ASK_NOT_EXIST',
+    6 => 'AUTH_ASK_NOT_MATCH',
+    7 => 'AUTH_QUOTA_NOT_INIT',
+    8 => 'AUTH_QUOTA_EXCEED',
+    9 => 'AUTH_QUOTA_UPDATE_ERROR',
+    10 => 'AUTH_CONN_FAIL',
+    11 => 'INTERNAL_ERROR',
   );
 }
 
@@ -523,5 +541,4 @@ class BaeLog {
   }
 
 }
-
 
