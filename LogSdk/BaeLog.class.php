@@ -90,7 +90,13 @@ class BaeLog
         return self::$instance;
     }
 
-    
+    /*
+    *获取上次发送的错误码，非0为失败
+    */
+    public function getResultCode()
+    {
+        return $this->netLog->netlog_code();
+    }    
     
     /**
      * @brief 打印一条致命错误日志
