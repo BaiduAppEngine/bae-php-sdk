@@ -176,18 +176,12 @@ class MemcachedMe
 	private function _getInitEnv($cache_id, $user, $password) {
 		$pname_str = $user;
 		$token_str = $password;
-		if(defined(HTTP_BAE_LOGID))
-		{
-			$logid_int = HTTP_BAE_LOGID;
-		}
-		else
-		{
-			$logid_int = 1;
-		}
+		$logid_int = 1;
+		
 		$appid = $cache_id;
 
 		if($pname_str === false || $token_str === false || $logid_int === false || $appid === false) {
-			$this->_log("Please setup HTTP_BAE_ENV_AK, HTTP_BAE_ENV_SK, HTTP_BAE_LOGID, HTTP_BAE_ENV_APPID\n");
+			$this->_log("Please setup HTTP_BAE_ENV_AK, HTTP_BAE_ENV_SK, HTTP_BAE_ENV_APPID\n");
 			return false;
 		}
 		$logid_int = intval($logid_int);
