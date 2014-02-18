@@ -200,8 +200,8 @@
               $ret = false;
 		 while (true)
 		 {
-			$ret = fwrite($this->socket, $buffer, strlen($buffer));
-			if ($ret === false)
+			$ret = @fwrite($this->socket, $buffer, strlen($buffer));
+			if ($ret == false)
 			{
 			   	fclose($this->socket);
 				$this->socket = NULL;
@@ -215,7 +215,7 @@
 
 			$buffer = substr($buffer, $ret);
 		 }
-                 if ($ret === false)//发送失败
+                 if ($ret == false)//发送失败
                      {
                          $ret = $this->connect($this->connect_timeout);
                          if ($ret ===false)//重新连接失败
@@ -233,8 +233,8 @@
                  $buffer = $orignbuf;
 		 while (true)
 		 {
-			$ret = fwrite($this->socket, $buffer, strlen($buffer));
-			if ($ret === false)
+			$ret = @fwrite($this->socket, $buffer, strlen($buffer));
+			if ($ret == false)
 			{
 			   	fclose($this->socket);
 				$this->socket = NULL;
